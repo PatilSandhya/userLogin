@@ -2,6 +2,7 @@ var userModel = require('../models/userModel');
 var UserSessionModel = require('../models/userSessionModel')
 require('../loaders/mongoose');
 const { createAccessToken } = require("../services/common.service");
+const { removePreviousUserSession } = require('../controllers/commonController')
 
 const createNewSession = async (payload) => {
     payload.userId = payload.userId;
@@ -45,7 +46,33 @@ const userLogin = async (req, res) =>{
     return res.status(200).send({ msg: "Login successfully", data: userData });
 }
 
+const userDetails = async (req, res, next) =>{
+    const userId = res.locals.userId;
+    const userData = await userModel.findById(userId);
+    if (!userData) return res.status(404).send({ msg: "User not found", data: {} });
+
+    console.log(userData);
+    res.send(userData);
+}
+
+const userLogout = async (req, res, next) =>{
+    try{
+        const { userId } = res.locals,
+            userSessionId = res.locals.userSessionId,
+            checkUserExists = await userModel.findOne({ _id: userId });
+            
+            if (checkUserExists) {
+                await removePreviousUserSession(userSessionId, false);
+                return res.send("logout");
+            } else return res.send("User not found");
+    }catch(err){
+        next(err);
+    }
+}
+
 module.exports = {
     userRegister,
-    userLogin
+    userLogin,
+    userDetails,
+    userLogout
 }

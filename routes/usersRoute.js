@@ -2,19 +2,19 @@ const express = require('express');
 const route = express.Router();
 const { celebrate } = require('celebrate');
 const { VALIDATION } = require("../validation/index.js");
-const {userRegister, userLogin} = require('../controllers/userController')
+const {userRegister, userLogin, userDetails, userLogout} = require('../controllers/userController')
 const { verifyUserSession } = require('../middleware/auth')
 
 route.get('/', (req, res)=>{
-    res.send("hellow" + req.body.name);
+    res.send("hi" + req.body.name);
 })
 
 route.post("/register", 
  celebrate({
 body: {
-    name: VALIDATION.GENERAL.NAME,
-    email: VALIDATION.GENERAL.EMAIL,
-    password: VALIDATION.GENERAL.PASSWORD,
+    name: VALIDATION.GENERAL.NAME.required(),
+    email: VALIDATION.GENERAL.EMAIL.required(),
+    password: VALIDATION.GENERAL.PASSWORD.required(),
     terms: VALIDATION.GENERAL.BOOLEAN.required(),
 }
 }), userRegister);
@@ -25,6 +25,8 @@ body: {
     email: VALIDATION.GENERAL.EMAIL,
     password: VALIDATION.GENERAL.PASSWORD,
 }
-}), userLogin);
+}), userLogin)
 
+.get("/details", verifyUserSession, userDetails)
+.patch("/logout", verifyUserSession, userLogout)
 module.exports = route;

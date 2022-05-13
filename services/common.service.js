@@ -1,15 +1,7 @@
-const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
 const createAccessToken = (sessionId) => {
-    return jwt.sign(
-        {
-            sessionId,
-            timestamp: Date.now()
-        },
-        process.env.JWT_SECRET,
-        { algorithm: 'HS256' }
-    );
+    return jwt.sign({ sessionId, timestamp: Date.now() }, process.env.JWT_SECRET,{ algorithm: 'HS256' });
 };
 
 const verifyAccessToken = (token) => {

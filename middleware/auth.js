@@ -9,18 +9,23 @@ exports.verifyUserSession = async (req, res, next) => {
     let authToken = req.headers.authorization.split(" ")[1];
     if (authMethod === 'Bearer' && authToken && authToken != '' && authToken != 'null') {
       let decrypted = await verifyAccessToken(authToken);
-      console.log(decrypted);
+      console.log("decypted data" + decrypted);
       if (decrypted.success) {
         let sessionData = await UserSessionModel.findOne(
           { _id: decrypted.data.sessionId }
         ).exec();
-        console.log(sessionData);
+        console.log("session data " + sessionData);
+        if (sessionData && sessionData.isActive) {
+          res.locals.userSessionId = sessionData._id;
+          res.locals.userId = sessionData.userId;
+          next();
+        }else res.send("invalid session");
       }
     } else res.status(422).send({ auth: true, success: false, statusCode: 422, msg: 'Invalid authorization token' });
 
     //console.log(authMethod);
     //console.log(authToken);
 
-    next();
+    
   }
   }
