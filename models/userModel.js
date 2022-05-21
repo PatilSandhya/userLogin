@@ -16,12 +16,17 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim:true
     },
-    terms: {
+    role: {
+        type: String,
+        default: "S" // A-superadmin, M-manager, S-staff, AC-accountant
+    },
+    isAdminApproved: {
         type: Boolean,
         required: true,
-    }
+        default: true,
+    },
 
-})
+}, { timestamps: true, versionKey: false })
 
 const user = mongoose.model('USER', userSchema)
 

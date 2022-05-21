@@ -1,0 +1,6 @@
+"_id","Date","Amount","Type","BankAccount","PaymentMethod","CategoryName","BillNo","Description","BillDocument","ChequeNumber","Customer","Driver"
+"61448549658a395eb3fb913c","15-09-2021",1234,"expense","Axis Bank","CARD","IT Expense","1","desc","/images/1631882182588-transaction-billdocument-group_64.png",,,
+"614491786bfb3e7875afab4d","16-09-2021",2222,"expense","Axis Bank","CHEQUE","IT Expense","","","",,,
+"615aaf0abebaf7da9c90b79f","03-10-2021",2190.5,"income","Axis Bank","CHEQUE","Invoice-Payment","Invoice #1","Invoice Payment From #1","","123456","thirdCustomer",
+"615d3d0902f6fbc6b636b344","05-10-2021",0,"income","Axis Bank","CASH","Invoice-Payment","Invoice #2","Invoice Payment From #2","",,"thirdCustomer",
+"6160003568e0f0c5f7d5f143","07-10-2021",900,"expense","Axis Bank","RTGS","Payroll-Salary","Payroll #3","Payroll Payment From #3","",,,"HK Goyani"

@@ -2,7 +2,8 @@ var userModel = require('../models/userModel');
 var UserSessionModel = require('../models/userSessionModel')
 require('../loaders/mongoose');
 const { createAccessToken } = require("../services/common.service");
-const { removePreviousUserSession } = require('../controllers/commonController')
+const { removePreviousUserSession } = require('../controllers/commonController');
+
 
 const createNewSession = async (payload) => {
     payload.userId = payload.userId;
@@ -14,6 +15,10 @@ const userRegister = async (req, res) =>{
     const reqData = req.body;
     console.log(reqData);
     const checkEmail = await userModel.find({ email: reqData.email})
+    //const checkData = await userModel.findOne({ email: reqData.email})
+    //console.log("find " + checkEmail);
+    //console.log("findOne " + checkData);
+    console.log(checkEmail);
     if (checkEmail && checkEmail.length > 0) {
         return res.status(422).send({ msg: "Please check again! This email is already registered!", data: {} });
     }
@@ -23,7 +28,7 @@ const userRegister = async (req, res) =>{
     reqData.terms = true;
     const newUser = new userModel(reqData)
     const userData = await newUser.save();
-    res.send("user registered");
+    return res.status(200).send({ msg: "User register successfully", data: userData });
 }
 
 const userLogin = async (req, res) =>{
@@ -32,6 +37,8 @@ const userLogin = async (req, res) =>{
     const email = req.body.email;
     console.log(email);
     const checkUser = await userModel.find({ email: reqData.email});
+    let userRole = checkUser.map(({ role }) => role)
+    console.log("role >" + userRole);
     console.log(checkUser);
     if (!checkUser || checkUser && checkUser.length == 0) {
         return res.status(404).send({ msg: "Please check again! This email is not registered!", data: {} });
@@ -41,7 +48,9 @@ const userLogin = async (req, res) =>{
     const sessionData = await createNewSession({ email, userId: userObj._id });
     const userData = {
        
-        token: await createAccessToken(sessionData._id)
+        token: await createAccessToken(sessionData._id),
+        email: email,
+        role: userRole
     }
     return res.status(200).send({ msg: "Login successfully", data: userData });
 }

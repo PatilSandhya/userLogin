@@ -6,27 +6,33 @@ const {userRegister, userLogin, userDetails, userLogout} = require('../controlle
 const { verifyUserSession } = require('../middleware/auth')
 
 route.get('/', (req, res)=>{
-    res.send("hi" + req.body.name);
+    res.render('login');
+});
+
+route.get('/dashboard', (req, res)=>{
+    res.render('dashboard');
 })
 
-route.post("/register", 
+/* route.post("/register", 
  celebrate({
 body: {
     name: VALIDATION.GENERAL.NAME.required(),
     email: VALIDATION.GENERAL.EMAIL.required(),
     password: VALIDATION.GENERAL.PASSWORD.required(),
-    terms: VALIDATION.GENERAL.BOOLEAN.required(),
-}
-}), userRegister);
+    role: VALIDATION.GENERAL.STRING.required().valid('A', 'M', 'S', 'AC'),
 
-route.post("/login", 
+}
+}), userRegister); */
+
+/* route.post("/login", 
  celebrate({
 body: {
     email: VALIDATION.GENERAL.EMAIL,
     password: VALIDATION.GENERAL.PASSWORD,
 }
-}), userLogin)
+}), userLogin) */
 
 .get("/details", verifyUserSession, userDetails)
 .patch("/logout", verifyUserSession, userLogout)
+
 module.exports = route;

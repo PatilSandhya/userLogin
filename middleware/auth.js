@@ -1,6 +1,6 @@
 const UserSessionModel = require('../models/userSessionModel');
 const { verifyAccessToken } = require("../services/common.service");
-
+const HTTP = require('../constant/responseCode.Constant');
 exports.verifyUserSession = async (req, res, next) => {
     const checkheader = req.headers.authorization ;
     //console.log(checkheader);
@@ -21,7 +21,7 @@ exports.verifyUserSession = async (req, res, next) => {
           next();
         }else res.send("invalid session");
       }
-    } else res.status(422).send({ auth: true, success: false, statusCode: 422, msg: 'Invalid authorization token' });
+    } else res.status(HTTP.BAD_REQUEST).send({ auth: true, success: false, statusCode: HTTP.BAD_REQUEST, msg: 'Invalid authorization token' });
 
     //console.log(authMethod);
     //console.log(authToken);
