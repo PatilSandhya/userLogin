@@ -90,7 +90,7 @@ const login = async (req, res, next) => {
     if (!currentAdmin || Object.keys(currentAdmin).length == 0){ 
 
         const currentUser = await userModel.findOne({ email });
-        if (!currentUser || Object.keys(currentUser).length == 0) return res.status(HTTP.NOT_FOUND).send({ msg: "Admin not found" });
+        if (!currentUser || Object.keys(currentUser).length == 0) return res.status(HTTP.NOT_FOUND).send({ msg: "User not found" });
     
         const isPasswordMatch = await comparePassword(password, currentUser.password);
         const role = currentUser.role;

@@ -145,7 +145,15 @@
                     </li>
                 </ul>
             </li>
-            
+            <li class="menu" id="register">
+                <a href="/register" aria-expanded="false" class="dropdown-toggle sidebarmenu1"> <!-- data-active="true" data-toggle="collapse" aria-expanded="true" -->
+                    <div class="">
+                        <span>Create User</span>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="dashboard" data-parent="#accordionExample">
+                </ul>
+            </li>
         </ul>
         <!-- <div class="shadow-bottom"></div> -->
         
@@ -173,6 +181,7 @@
             document.getElementById("driverData").remove();
             document.getElementById("adminData").remove();
             document.getElementById("customeFieldsData").remove();
+            document.getElementById("register").remove();
         }
     }
 </script>

@@ -9,6 +9,9 @@ route.get('/', (req, res)=>{
     res.render('login');
 });
 
+route.get('/register', (req, res)=>{
+    res.render('register');
+});
 route.get('/dashboard', (req, res)=>{
     res.render('dashboard');
 })
